@@ -1,31 +1,19 @@
 package main
 
 import (
-	"encoding/json"
-
-	"fahmin002.github.io/users-api/database"
-	"fahmin002.github.io/users-api/router"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gotolist/libs/router"
 )
 
 func main() {
-	// Start Fiber App
-	app := fiber.New(fiber.Config{
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
-	})
+	app := fiber.New()
 
-	// Send a string for GET Calls to "/" endpoint
+	router.SetupRouter(app)
+
 	app.Get("/", func(c *fiber.Ctx) error {
-		err := c.SendString("And the API is UP!")
+		err := c.SendString("Hello World!")
 		return err
 	})
 
-	// connect to database
-	database.ConnectDB()
-
-	// setup router
-	router.SetupRoutes(app)
-
-	app.Listen("localhost:3000")
+	app.Listen(":3000")
 }
